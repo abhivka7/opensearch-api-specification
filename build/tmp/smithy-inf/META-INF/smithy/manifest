@@ -1,0 +1,12 @@
+cluster/put_update_cluster_settings/operations.smithy
+cluster/put_update_cluster_settings/structures.smithy
+cluster/get_cluster_settings/operations.smithy
+cluster/get_cluster_settings/structures.smithy
+indices/create/operations.smithy
+indices/create/structures.smithy
+indices/put_mapping/operations.smithy
+indices/put_mapping/structures.smithy
+opensearch.smithy
+common_structures.smithy
+common_enums.smithy
+common_datatypes.smithy
