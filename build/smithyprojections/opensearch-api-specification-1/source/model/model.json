@@ -1,0 +1,1114 @@
+{
+    "smithy": "1.0",
+    "shapes": {
+        "aws.api#ArnNamespace": {
+            "type": "string",
+            "traits": {
+                "smithy.api#pattern": "^[a-z0-9.\\-]{1,63}$",
+                "smithy.api#private": {}
+            }
+        },
+        "aws.protocols#ChecksumAlgorithm": {
+            "type": "string",
+            "traits": {
+                "smithy.api#enum": [
+                    {
+                        "value": "CRC32C",
+                        "name": "CRC32C"
+                    },
+                    {
+                        "value": "CRC32",
+                        "name": "CRC32"
+                    },
+                    {
+                        "value": "SHA1",
+                        "name": "SHA1"
+                    },
+                    {
+                        "value": "SHA256",
+                        "name": "SHA256"
+                    }
+                ],
+                "smithy.api#private": {}
+            }
+        },
+        "aws.protocols#ChecksumAlgorithmSet": {
+            "type": "set",
+            "member": {
+                "target": "aws.protocols#ChecksumAlgorithm"
+            },
+            "traits": {
+                "smithy.api#length": {
+                    "min": 1
+                },
+                "smithy.api#private": {}
+            }
+        },
+        "aws.api#CloudFormationName": {
+            "type": "string",
+            "traits": {
+                "smithy.api#pattern": "^[A-Z][A-Za-z0-9]+$",
+                "smithy.api#private": {}
+            }
+        },
+        "OpenSearch#ClusterSettings": {
+            "type": "map",
+            "key": {
+                "target": "OpenSearch#SettingType"
+            },
+            "value": {
+                "target": "OpenSearch#UserDefinedValueMap"
+            }
+        },
+        "OpenSearch#DefaultOperator": {
+            "type": "string",
+            "traits": {
+                "smithy.api#enum": [
+                    {
+                        "value": "AND",
+                        "name": "AND"
+                    },
+                    {
+                        "value": "OR",
+                        "name": "OR"
+                    }
+                ]
+            }
+        },
+        "OpenSearch#ExpandWildcards": {
+            "type": "string",
+            "traits": {
+                "smithy.api#enum": [
+                    {
+                        "value": "all",
+                        "name": "all",
+                        "documentation": "Match any data stream or index, including hidden ones."
+                    },
+                    {
+                        "value": "open",
+                        "name": "open",
+                        "documentation": "Match open, non-hidden indices. Also matches any non-hidden data stream."
+                    },
+                    {
+                        "value": "closed",
+                        "name": "closed",
+                        "documentation": "Match closed, non-hidden indices. Also matches any non-hidden data stream. Data streams cannot be closed."
+                    },
+                    {
+                        "value": "hidden",
+                        "name": "hidden",
+                        "documentation": "Match hidden data streams and hidden indices. Must be combined with open, closed, or both."
+                    },
+                    {
+                        "value": "none",
+                        "name": "none",
+                        "documentation": "Wildcard expressions are not accepted."
+                    }
+                ]
+            }
+        },
+        "OpenSearch#GETClusterSettings": {
+            "type": "operation",
+            "input": {
+                "target": "OpenSearch#GETClusterSettingsInput"
+            },
+            "output": {
+                "target": "OpenSearch#GETClusterSettingsOutput"
+            },
+            "traits": {
+                "smithy.api#documentation": "Get Cluster Settings.",
+                "smithy.api#http": {
+                    "method": "GET",
+                    "uri": "/_cluster/settings"
+                },
+                "smithy.api#suppress": [
+                    "HttpUriConflict"
+                ]
+            }
+        },
+        "OpenSearch#GETClusterSettingsInput": {
+            "type": "structure",
+            "members": {
+                "flat_settings": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "flat_settings"
+                    }
+                },
+                "include_defaults": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "include_defaults"
+                    }
+                },
+                "master_timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "master_timeout"
+                    }
+                },
+                "timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "timeout"
+                    }
+                }
+            }
+        },
+        "OpenSearch#GETClusterSettingsOutput": {
+            "type": "structure",
+            "members": {
+                "acknowledged": {
+                    "target": "smithy.api#Boolean"
+                },
+                "settings": {
+                    "target": "OpenSearch#ClusterSettings"
+                }
+            }
+        },
+        "OpenSearch#IndexName": {
+            "type": "string",
+            "traits": {
+                "smithy.api#pattern": "^[^+_\\-\\.][^\\\\, /*?\"<>| ,#\\nA-Z]+$"
+            }
+        },
+        "OpenSearch#OpenSearch": {
+            "type": "service",
+            "traits": {
+                "aws.protocols#restJson1": {}
+            },
+            "version": "2021-11-23",
+            "operations": [
+                {
+                    "target": "OpenSearch#GETClusterSettings"
+                },
+                {
+                    "target": "OpenSearch#PutIndexMapping"
+                },
+                {
+                    "target": "OpenSearch#PutIndexMappingWithIndex"
+                },
+                {
+                    "target": "OpenSearch#PutUpdateClusterSettings"
+                }
+            ]
+        },
+        "OpenSearch#PutCreateIndex": {
+            "type": "operation",
+            "input": {
+                "target": "OpenSearch#PutCreateIndexInput"
+            },
+            "output": {
+                "target": "OpenSearch#PutCreateIndexOutput"
+            },
+            "traits": {
+                "smithy.api#documentation": "Creates index mappings.",
+                "smithy.api#http": {
+                    "method": "PUT",
+                    "uri": "/{index}"
+                },
+                "smithy.api#suppress": [
+                    "HttpUriConflict"
+                ]
+            }
+        },
+        "OpenSearch#PutCreateIndexInput": {
+            "type": "structure",
+            "members": {
+                "index": {
+                    "target": "OpenSearch#IndexName",
+                    "traits": {
+                        "smithy.api#httpLabel": {},
+                        "smithy.api#required": {}
+                    }
+                },
+                "include_type_name": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "include_type_name"
+                    }
+                },
+                "wait_for_active_shards": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#httpQuery": "wait_for_active_shards"
+                    }
+                },
+                "master_timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "master_timeout"
+                    }
+                },
+                "timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "timeout"
+                    }
+                },
+                "aliases": {
+                    "target": "OpenSearch#UserDefinedValueMap"
+                },
+                "mapping": {
+                    "target": "OpenSearch#UserDefinedValueMap"
+                },
+                "settings": {
+                    "target": "OpenSearch#UserDefinedValueMap"
+                }
+            }
+        },
+        "OpenSearch#PutCreateIndexOutput": {
+            "type": "structure",
+            "members": {
+                "Index": {
+                    "target": "OpenSearch#IndexName",
+                    "traits": {
+                        "smithy.api#required": {}
+                    }
+                },
+                "shards_acknowledged": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#required": {}
+                    }
+                },
+                "acknowledged": {
+                    "target": "smithy.api#Boolean"
+                }
+            }
+        },
+        "OpenSearch#PutIndexMapping": {
+            "type": "operation",
+            "input": {
+                "target": "OpenSearch#PutIndexMappingInput"
+            },
+            "output": {
+                "target": "OpenSearch#PutIndexMappingOutput"
+            },
+            "traits": {
+                "smithy.api#documentation": "The put mapping API operation lets you add new mappings and fields to an index.",
+                "smithy.api#http": {
+                    "method": "PUT",
+                    "uri": "/_mapping"
+                },
+                "smithy.api#suppress": [
+                    "HttpUriConflict"
+                ]
+            }
+        },
+        "OpenSearch#PutIndexMappingInput": {
+            "type": "structure",
+            "members": {
+                "allow_no_indices": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "allow_no_indices"
+                    }
+                },
+                "expand_wildcards": {
+                    "target": "OpenSearch#ExpandWildcards",
+                    "traits": {
+                        "smithy.api#httpQuery": "expand_wildcards"
+                    }
+                },
+                "ignore_unavailable": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "ignore_unavailable"
+                    }
+                },
+                "include_type_name": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "include_type_name"
+                    }
+                },
+                "master_timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "master_timeout"
+                    }
+                },
+                "timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "timeout"
+                    }
+                },
+                "write_index_only": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "write_index_only"
+                    }
+                },
+                "properties": {
+                    "target": "smithy.api#Document"
+                }
+            }
+        },
+        "OpenSearch#PutIndexMappingOutput": {
+            "type": "structure",
+            "members": {
+                "acknowledged": {
+                    "target": "smithy.api#Boolean"
+                }
+            }
+        },
+        "OpenSearch#PutIndexMappingWithIndex": {
+            "type": "operation",
+            "input": {
+                "target": "OpenSearch#PutIndexMappingWithIndexInput"
+            },
+            "output": {
+                "target": "OpenSearch#PutIndexMappingOutput"
+            },
+            "traits": {
+                "smithy.api#documentation": "The put mapping API operation lets you add new mappings and fields to an index.",
+                "smithy.api#http": {
+                    "method": "PUT",
+                    "uri": "/{index}/_mapping"
+                },
+                "smithy.api#suppress": [
+                    "HttpUriConflict"
+                ]
+            }
+        },
+        "OpenSearch#PutIndexMappingWithIndexInput": {
+            "type": "structure",
+            "members": {
+                "index": {
+                    "target": "OpenSearch#IndexName",
+                    "traits": {
+                        "smithy.api#httpLabel": {},
+                        "smithy.api#required": {}
+                    }
+                },
+                "allow_no_indices": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "allow_no_indices"
+                    }
+                },
+                "expand_wildcards": {
+                    "target": "OpenSearch#ExpandWildcards",
+                    "traits": {
+                        "smithy.api#httpQuery": "expand_wildcards"
+                    }
+                },
+                "ignore_unavailable": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "ignore_unavailable"
+                    }
+                },
+                "include_type_name": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "include_type_name"
+                    }
+                },
+                "master_timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "master_timeout"
+                    }
+                },
+                "timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "timeout"
+                    }
+                },
+                "write_index_only": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "write_index_only"
+                    }
+                },
+                "properties": {
+                    "target": "smithy.api#Document"
+                }
+            }
+        },
+        "OpenSearch#PutUpdateClusterSettings": {
+            "type": "operation",
+            "input": {
+                "target": "OpenSearch#PutUpdateClusterSettingsInput"
+            },
+            "output": {
+                "target": "OpenSearch#PutUpdateClusterSettingsOutput"
+            },
+            "traits": {
+                "smithy.api#documentation": "Updates Cluster Setting.",
+                "smithy.api#http": {
+                    "method": "PUT",
+                    "uri": "/_cluster/settings"
+                },
+                "smithy.api#suppress": [
+                    "HttpUriConflict"
+                ]
+            }
+        },
+        "OpenSearch#PutUpdateClusterSettingsInput": {
+            "type": "structure",
+            "members": {
+                "flat_settings": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "flat_settings"
+                    }
+                },
+                "include_defaults": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#httpQuery": "include_defaults"
+                    }
+                },
+                "master_timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "master_timeout"
+                    }
+                },
+                "timeout": {
+                    "target": "OpenSearch#Time",
+                    "traits": {
+                        "smithy.api#httpQuery": "timeout"
+                    }
+                },
+                "settings": {
+                    "target": "OpenSearch#ClusterSettings"
+                }
+            }
+        },
+        "OpenSearch#PutUpdateClusterSettingsOutput": {
+            "type": "structure",
+            "members": {
+                "acknowledged": {
+                    "target": "smithy.api#Boolean"
+                },
+                "settings": {
+                    "target": "OpenSearch#ClusterSettings"
+                }
+            }
+        },
+        "OpenSearch#SearchType": {
+            "type": "string",
+            "traits": {
+                "smithy.api#enum": [
+                    {
+                        "value": "0",
+                        "name": "query_then_fetch",
+                        "documentation": "Documents are scored using local term and document frequencies for the shard. This is usually faster but less accurate."
+                    },
+                    {
+                        "value": "1",
+                        "name": "dfs_query_then_fetch",
+                        "documentation": "Documents are scored using global term and document frequencies across all shards. This is usually slower but more accurate."
+                    }
+                ]
+            }
+        },
+        "OpenSearch#SettingType": {
+            "type": "string",
+            "traits": {
+                "smithy.api#enum": [
+                    {
+                        "value": "transient",
+                        "name": "transient"
+                    },
+                    {
+                        "value": "persistent",
+                        "name": "persistent"
+                    }
+                ]
+            }
+        },
+        "aws.auth#StringList": {
+            "type": "list",
+            "member": {
+                "target": "smithy.api#String"
+            },
+            "traits": {
+                "smithy.api#private": {}
+            }
+        },
+        "aws.protocols#StringList": {
+            "type": "list",
+            "member": {
+                "target": "smithy.api#String"
+            },
+            "traits": {
+                "smithy.api#private": {}
+            }
+        },
+        "OpenSearch#SuggestMode": {
+            "type": "string",
+            "traits": {
+                "smithy.api#enum": [
+                    {
+                        "value": "0",
+                        "name": "missing"
+                    },
+                    {
+                        "value": "1",
+                        "name": "popular"
+                    },
+                    {
+                        "value": "2",
+                        "name": "always"
+                    }
+                ]
+            }
+        },
+        "OpenSearch#Time": {
+            "type": "string",
+            "traits": {
+                "smithy.api#pattern": "^([0-9]+)(?:d|h|m|s|ms|micros|nanos)$"
+            }
+        },
+        "OpenSearch#UserDefinedValue": {
+            "type": "document"
+        },
+        "OpenSearch#UserDefinedValueMap": {
+            "type": "map",
+            "key": {
+                "target": "smithy.api#String"
+            },
+            "value": {
+                "target": "OpenSearch#UserDefinedValue"
+            }
+        },
+        "aws.api#arn": {
+            "type": "structure",
+            "members": {
+                "template": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#required": {}
+                    }
+                },
+                "absolute": {
+                    "target": "smithy.api#Boolean"
+                },
+                "noRegion": {
+                    "target": "smithy.api#Boolean"
+                },
+                "noAccount": {
+                    "target": "smithy.api#Boolean"
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "Specifies an ARN template for the resource.",
+                "smithy.api#externalDocumentation": {
+                    "Reference": "https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html"
+                },
+                "smithy.api#trait": {
+                    "selector": "resource"
+                }
+            }
+        },
+        "aws.api#arnReference": {
+            "type": "structure",
+            "members": {
+                "type": {
+                    "target": "smithy.api#String"
+                },
+                "resource": {
+                    "target": "smithy.api#String"
+                },
+                "service": {
+                    "target": "smithy.api#String"
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "Marks a string as containing an ARN.",
+                "smithy.api#trait": {
+                    "selector": "string"
+                }
+            }
+        },
+        "aws.protocols#awsJson1_0": {
+            "type": "structure",
+            "members": {
+                "http": {
+                    "target": "aws.protocols#StringList"
+                },
+                "eventStreamHttp": {
+                    "target": "aws.protocols#StringList"
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "An RPC-based protocol that sends JSON payloads. This protocol does not use HTTP binding traits.",
+                "smithy.api#protocolDefinition": {
+                    "traits": [
+                        "smithy.api#jsonName",
+                        "smithy.api#timestampFormat",
+                        "smithy.api#cors",
+                        "smithy.api#endpoint",
+                        "smithy.api#hostLabel"
+                    ]
+                },
+                "smithy.api#trait": {
+                    "selector": "service"
+                }
+            }
+        },
+        "aws.protocols#awsJson1_1": {
+            "type": "structure",
+            "members": {
+                "http": {
+                    "target": "aws.protocols#StringList"
+                },
+                "eventStreamHttp": {
+                    "target": "aws.protocols#StringList"
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "An RPC-based protocol that sends JSON payloads. This protocol does not use HTTP binding traits.",
+                "smithy.api#protocolDefinition": {
+                    "traits": [
+                        "smithy.api#jsonName",
+                        "smithy.api#timestampFormat",
+                        "smithy.api#cors",
+                        "smithy.api#endpoint",
+                        "smithy.api#hostLabel"
+                    ]
+                },
+                "smithy.api#trait": {
+                    "selector": "service"
+                }
+            }
+        },
+        "aws.protocols#awsQuery": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#documentation": "An RPC-based protocol that sends 'POST' requests in the body as `x-www-form-urlencoded` strings and responses in XML documents. This protocol does not use HTTP binding traits.",
+                "smithy.api#protocolDefinition": {
+                    "noInlineDocumentSupport": true,
+                    "traits": [
+                        "aws.protocols#awsQueryError",
+                        "smithy.api#xmlAttribute",
+                        "smithy.api#xmlFlattened",
+                        "smithy.api#xmlName",
+                        "smithy.api#xmlNamespace",
+                        "smithy.api#timestampFormat",
+                        "smithy.api#cors",
+                        "smithy.api#endpoint",
+                        "smithy.api#hostLabel"
+                    ]
+                },
+                "smithy.api#trait": {
+                    "selector": "service [trait|xmlNamespace]"
+                }
+            }
+        },
+        "aws.protocols#awsQueryError": {
+            "type": "structure",
+            "members": {
+                "code": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "The value used to distinguish this error shape during serialization.",
+                        "smithy.api#required": {}
+                    }
+                },
+                "httpResponseCode": {
+                    "target": "smithy.api#Integer",
+                    "traits": {
+                        "smithy.api#documentation": "The HTTP response code used on a response containing this error shape.",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "Provides the value in the 'Code' distinguishing field and HTTP response code for an operation error.",
+                "smithy.api#tags": [
+                    "diff.error.const"
+                ],
+                "smithy.api#trait": {
+                    "selector": "structure [trait|error]"
+                }
+            }
+        },
+        "aws.api#clientDiscoveredEndpoint": {
+            "type": "structure",
+            "members": {
+                "required": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "Indicates that the target operation should use the client's endpoint discovery logic.",
+                "smithy.api#trait": {
+                    "selector": "operation"
+                }
+            }
+        },
+        "aws.api#clientEndpointDiscovery": {
+            "type": "structure",
+            "members": {
+                "operation": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "Indicates the operation that clients should use to discover endpoints for the service.",
+                        "smithy.api#idRef": {
+                            "failWhenMissing": true,
+                            "selector": "operation"
+                        },
+                        "smithy.api#required": {}
+                    }
+                },
+                "error": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "Indicates the error that tells clients that the endpoint they are using is no longer valid. This error MUST be bound to any operation bound to the service which is marked with the aws.api#clientDiscoveredEndpoint trait.",
+                        "smithy.api#idRef": {
+                            "failWhenMissing": true,
+                            "selector": "structure[trait|error]"
+                        },
+                        "smithy.api#recommended": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "Configures endpoint discovery for the service.",
+                "smithy.api#trait": {
+                    "selector": "service"
+                }
+            }
+        },
+        "aws.api#clientEndpointDiscoveryId": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#documentation": "Indicates members of the operation input which should be use to discover endpoints.",
+                "smithy.api#trait": {
+                    "selector": "operation[trait|aws.api#clientDiscoveredEndpoint] -[input]-> structure > :test(member[trait|required] > string)"
+                }
+            }
+        },
+        "aws.auth#cognitoUserPools": {
+            "type": "structure",
+            "members": {
+                "providerArns": {
+                    "target": "aws.auth#StringList",
+                    "traits": {
+                        "smithy.api#documentation": "A list of the Amazon Cognito user pool ARNs. Each element is of this format: arn:aws:cognito-idp:{region}:{account_id}:userpool/{user_pool_id}.",
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#authDefinition": {},
+                "smithy.api#documentation": "Configures an Amazon Cognito User Pools auth scheme.",
+                "smithy.api#internal": {},
+                "smithy.api#tags": [
+                    "internal"
+                ],
+                "smithy.api#trait": {
+                    "selector": "service"
+                }
+            }
+        },
+        "aws.api#controlPlane": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#documentation": "Defines a service, resource, or operation as operating on the control plane.",
+                "smithy.api#trait": {
+                    "selector": ":test(service, resource, operation)",
+                    "conflicts": [
+                        "aws.api#dataPlane"
+                    ]
+                }
+            }
+        },
+        "aws.api#data": {
+            "type": "string",
+            "traits": {
+                "smithy.api#documentation": "Designates the target as containing data of a known classification level.",
+                "smithy.api#enum": [
+                    {
+                        "value": "content",
+                        "name": "CUSTOMER_CONTENT",
+                        "documentation": "Customer content means any software (including machine images), data, text, audio, video or images that customers or any customer end user transfers to AWS for processing, storage or hosting by AWS services in connection with the customer’s accounts and any computational results that customers or any customer end user derive from the foregoing through their use of AWS services."
+                    },
+                    {
+                        "value": "account",
+                        "name": "CUSTOMER_ACCOUNT_INFORMATION",
+                        "documentation": "Account information means information about customers that customers provide to AWS in connection with the creation or administration of customers’ accounts."
+                    },
+                    {
+                        "value": "usage",
+                        "name": "SERVICE_ATTRIBUTES",
+                        "documentation": "Service Attributes means service usage data related to a customer’s account, such as resource identifiers, metadata tags, security and access roles, rules, usage policies, permissions, usage statistics, logging data, and analytics."
+                    },
+                    {
+                        "value": "tagging",
+                        "name": "TAG_DATA",
+                        "documentation": "Designates metadata tags applied to AWS resources."
+                    },
+                    {
+                        "value": "permissions",
+                        "name": "PERMISSIONS_DATA",
+                        "documentation": "Designates security and access roles, rules, usage policies, and permissions."
+                    }
+                ],
+                "smithy.api#trait": {
+                    "selector": ":test(simpleType, collection, structure, union, member)"
+                }
+            }
+        },
+        "aws.api#dataPlane": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#documentation": "Defines a service, resource, or operation as operating on the data plane.",
+                "smithy.api#trait": {
+                    "selector": ":test(service, resource, operation)",
+                    "conflicts": [
+                        "aws.api#controlPlane"
+                    ]
+                }
+            }
+        },
+        "aws.protocols#ec2Query": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#documentation": "An RPC-based protocol that sends 'POST' requests in the body as Amazon EC2 formatted `x-www-form-urlencoded` strings and responses in XML documents. This protocol does not use HTTP binding traits.",
+                "smithy.api#protocolDefinition": {
+                    "noInlineDocumentSupport": true,
+                    "traits": [
+                        "aws.protocols#ec2QueryName",
+                        "smithy.api#xmlAttribute",
+                        "smithy.api#xmlFlattened",
+                        "smithy.api#xmlName",
+                        "smithy.api#xmlNamespace",
+                        "smithy.api#timestampFormat",
+                        "smithy.api#cors",
+                        "smithy.api#endpoint",
+                        "smithy.api#hostLabel"
+                    ]
+                },
+                "smithy.api#trait": {
+                    "selector": "service [trait|xmlNamespace]"
+                }
+            }
+        },
+        "aws.protocols#ec2QueryName": {
+            "type": "string",
+            "traits": {
+                "smithy.api#documentation": "Indicates the serialized name of a structure member when that structure is serialized for the input of an EC2 operation.",
+                "smithy.api#pattern": "^[a-zA-Z_][a-zA-Z_0-9-]*$",
+                "smithy.api#trait": {
+                    "selector": "structure > member"
+                }
+            }
+        },
+        "aws.protocols#httpChecksum": {
+            "type": "structure",
+            "members": {
+                "requestAlgorithmMember": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "Defines a top-level operation input member that is used to configure request checksum behavior."
+                    }
+                },
+                "requestChecksumRequired": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#documentation": "Indicates an operation requires a checksum in its HTTP request."
+                    }
+                },
+                "requestValidationModeMember": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "Defines a top-level operation input member used to opt-in to response checksum validation."
+                    }
+                },
+                "responseAlgorithms": {
+                    "target": "aws.protocols#ChecksumAlgorithmSet",
+                    "traits": {
+                        "smithy.api#documentation": "Defines the checksum algorithms clients should look for when performing HTTP response checksum validation."
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "Indicates that an operation supports checksum validation.",
+                "smithy.api#trait": {
+                    "selector": "operation"
+                },
+                "smithy.api#unstable": {}
+            }
+        },
+        "aws.protocols#restJson1": {
+            "type": "structure",
+            "members": {
+                "http": {
+                    "target": "aws.protocols#StringList"
+                },
+                "eventStreamHttp": {
+                    "target": "aws.protocols#StringList"
+                }
+            },
+            "traits": {
+                "smithy.api#documentation": "A RESTful protocol that sends JSON in structured payloads.",
+                "smithy.api#protocolDefinition": {
+                    "traits": [
+                        "smithy.api#cors",
+                        "smithy.api#endpoint",
+                        "smithy.api#hostLabel",
+                        "smithy.api#http",
+                        "smithy.api#httpError",
+                        "smithy.api#httpHeader",
+                        "smithy.api#httpLabel",
+                        "smithy.api#httpPayload",
+                        "smithy.api#httpPrefixHeaders",
+                        "smithy.api#httpQuery",
+                        "smithy.api#httpQueryParams",
+                        "smithy.api#httpResponseCode",
+                        "smithy.api#jsonName",
+                        "smithy.api#timestampFormat"
+                    ]
+                },
+                "smithy.api#trait": {
+                    "selector": "service"
+                }
+            }
+        },
+        "aws.protocols#restXml": {
+            "type": "structure",
+            "members": {
+                "http": {
+                    "target": "aws.protocols#StringList"
+                },
+                "eventStreamHttp": {
+                    "target": "aws.protocols#StringList"
+                },
+                "noErrorWrapping": {
+                    "target": "smithy.api#Boolean",
+                    "traits": {
+                        "smithy.api#deprecated": {},
+                        "smithy.api#documentation": "Disables the serialization wrapping of error properties in an 'Error' XML element."
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#deprecated": {},
+                "smithy.api#documentation": "A RESTful protocol that sends XML in structured payloads.",
+                "smithy.api#protocolDefinition": {
+                    "noInlineDocumentSupport": true,
+                    "traits": [
+                        "smithy.api#cors",
+                        "smithy.api#endpoint",
+                        "smithy.api#hostLabel",
+                        "smithy.api#http",
+                        "smithy.api#httpError",
+                        "smithy.api#httpHeader",
+                        "smithy.api#httpLabel",
+                        "smithy.api#httpPayload",
+                        "smithy.api#httpPrefixHeaders",
+                        "smithy.api#httpQuery",
+                        "smithy.api#httpQueryParams",
+                        "smithy.api#httpResponseCode",
+                        "smithy.api#xmlAttribute",
+                        "smithy.api#xmlFlattened",
+                        "smithy.api#xmlName",
+                        "smithy.api#xmlNamespace"
+                    ]
+                },
+                "smithy.api#trait": {
+                    "selector": "service"
+                }
+            }
+        },
+        "aws.customizations#s3UnwrappedXmlOutput": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#documentation": "Indicates the response body from S3 is not wrapped in the aws-restxml-protocol operation-level XML node. Intended to only be used by AWS S3.",
+                "smithy.api#trait": {
+                    "selector": "operation"
+                }
+            }
+        },
+        "aws.api#service": {
+            "type": "structure",
+            "members": {
+                "sdkId": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#required": {}
+                    }
+                },
+                "arnNamespace": {
+                    "target": "aws.api#ArnNamespace"
+                },
+                "cloudFormationName": {
+                    "target": "aws.api#CloudFormationName"
+                },
+                "cloudTrailEventSource": {
+                    "target": "smithy.api#String"
+                },
+                "endpointPrefix": {
+                    "target": "smithy.api#String"
+                }
+            },
+            "traits": {
+                "smithy.api#trait": {
+                    "selector": "service"
+                }
+            }
+        },
+        "aws.auth#sigv4": {
+            "type": "structure",
+            "members": {
+                "name": {
+                    "target": "smithy.api#String",
+                    "traits": {
+                        "smithy.api#documentation": "The signature version 4 service signing name to use in the credential scope when signing requests. This value SHOULD match the `arnNamespace` property of the `aws.api#service-trait`.",
+                        "smithy.api#externalDocumentation": {
+                            "Reference": "https://docs.aws.amazon.com/general/latest/gr/sigv4-create-string-to-sign.html"
+                        },
+                        "smithy.api#length": {
+                            "min": 1
+                        },
+                        "smithy.api#required": {}
+                    }
+                }
+            },
+            "traits": {
+                "smithy.api#authDefinition": {
+                    "traits": [
+                        "aws.auth#unsignedPayload"
+                    ]
+                },
+                "smithy.api#documentation": "Signature Version 4 is the process to add authentication information to AWS requests sent by HTTP. For security, most requests to AWS must be signed with an access key, which consists of an access key ID and secret access key. These two keys are commonly referred to as your security credentials.",
+                "smithy.api#externalDocumentation": {
+                    "Reference": "https://docs.aws.amazon.com/general/latest/gr/signature-version-4.html"
+                },
+                "smithy.api#trait": {
+                    "selector": "service"
+                }
+            }
+        },
+        "aws.auth#unsignedPayload": {
+            "type": "structure",
+            "members": {},
+            "traits": {
+                "smithy.api#documentation": "Indicates that the request payload of a signed request is not to be used as part of the signature.",
+                "smithy.api#trait": {
+                    "selector": "operation"
+                }
+            }
+        }
+    }
+}
