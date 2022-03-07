@@ -1,9 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
-// 
-//  The OpenSearch Contributors require contributions made to
-//  this file be licensed under the Apache-2.0 license or a
-//  compatible open source license.
-
 namespace OpenSearch
 
 @pattern("^[^+_\\-\\.][^\\\\, /*?\"<>| ,#\\nA-Z]+$")
@@ -28,6 +22,7 @@ document UserDefinedValue
      name: "persistent"}
 ])
 string SettingType
+// keeping  this in common_enums causes error: member shape targets an unresolved shape `OpenSearch#SettingType`
 
 map ClusterSettings{
     key: SettingType,
